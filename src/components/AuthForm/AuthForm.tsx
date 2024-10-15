@@ -3,7 +3,7 @@ import { userAuthorization } from "../../api/userAuthorization";
 import { getOtpCode } from "../../api/getOtpCode";
 import styles from "./AuthForm.module.css";
 
-interface AuthFormProps {
+export interface AuthFormProps {
   login: (otpCode: string) => void;
 }
 
@@ -62,6 +62,11 @@ const AuthForm = ({ login }: AuthFormProps) => {
           }}
           placeholder="Телефон"
           value={phone}
+          onKeyPress={(event) => {
+            if (!/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+          }}
         />
         {isOtpCode && (
           <input
@@ -69,13 +74,18 @@ const AuthForm = ({ login }: AuthFormProps) => {
               optCodeHandler(e);
             }}
             placeholder="Проверочный код"
+            type="text"
             value={otpCode}
           />
         )}
         <button
           onClick={() => {
             isOtpCode
-              ? authorization()
+              ? otpCode.length < 6
+                ? alert("Код должен содержать 6 цифр")
+                : authorization()
+              : phone == ""
+              ? alert("Заполните номер телефона!")
               : getOtpCode(phone).then((responce) => {
                   responceHandler(responce.success);
                 });

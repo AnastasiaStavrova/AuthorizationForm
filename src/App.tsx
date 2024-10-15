@@ -1,5 +1,13 @@
 import { useState } from "react";
-import AuthForm from "./components/AuthForm/AuthForm";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  replace,
+} from "react-router-dom";
+import AuthorizationPage from "./Pages/AuthorizationPage/AuthorizationPage";
+import MainPage from "./Pages/MainPage/MainPage";
 
 function App() {
   const [isLogged, setIsLogged] = useState(
@@ -9,11 +17,18 @@ function App() {
   const login = (otpCode: string) => {
     localStorage.setItem("userToken", otpCode);
     setIsLogged(true);
+
+    window.location.replace("/main");
   };
 
   return (
     <>
-      <AuthForm login={login} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AuthorizationPage login={login} />} />
+          <Route path="/main" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
