@@ -9,7 +9,6 @@ function App() {
   const login = (otpCode: string) => {
     localStorage.setItem("userToken", otpCode);
     setIsLogged(true);
-    console.log("Yes");
   };
 
   return (

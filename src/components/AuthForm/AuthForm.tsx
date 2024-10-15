@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { userAuthorization } from "../../api/userAuthorization";
 import { getOtpCode } from "../../api/getOtpCode";
+import styles from "./AuthForm.module.css";
 
 interface AuthFormProps {
   login: (otpCode: string) => void;
@@ -49,10 +50,12 @@ const AuthForm = ({ login }: AuthFormProps) => {
   }, [seconds]);
 
   return (
-    <div>
-      <div>
-        <p>Авторизация</p>
-        <p>Введите номер телефона для входа в личный кабинет</p>
+    <div className={styles.authorization}>
+      <div className={styles.content}>
+        <h2 className={styles.title}>Вход</h2>
+        <p className={styles.description}>
+          Введите номер телефона для входа в личный кабинет
+        </p>
         <input
           onChange={(e) => {
             phoneHandler(e);
@@ -82,6 +85,7 @@ const AuthForm = ({ login }: AuthFormProps) => {
         </button>
         {isOtpCode && (
           <p
+            className={isTimer ? styles.timerText : styles.resendingText}
             onClick={() => {
               !isTimer &&
                 getOtpCode(phone).then((responce) => {
