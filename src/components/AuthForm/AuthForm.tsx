@@ -16,10 +16,18 @@ const AuthForm = ({ login }: AuthFormProps) => {
 
   const phoneHandler = (e: { target: { value: string } }) => {
     setPhone(e.target.value);
+
+    document
+      .getElementById(`${styles.phone}`)!
+      .style.setProperty("display", "none");
   };
 
   const optCodeHandler = (e: { target: { value: string } }) => {
     setOtpCode(e.target.value);
+
+    document
+      .getElementById(`${styles.code}`)!
+      .style.setProperty("display", "none");
   };
 
   const responceHandler = (responce: Boolean) => {
@@ -37,6 +45,8 @@ const AuthForm = ({ login }: AuthFormProps) => {
 
     if (responce.success) {
       login(responce.token);
+    } else {
+      alert("Неверный код подтверждения!");
     }
   };
 
@@ -56,36 +66,56 @@ const AuthForm = ({ login }: AuthFormProps) => {
         <p className={styles.description}>
           Введите номер телефона для входа в личный кабинет
         </p>
-        <input
-          onChange={(e) => {
-            phoneHandler(e);
-          }}
-          placeholder="Телефон"
-          value={phone}
-          onKeyPress={(event) => {
-            if (!/[0-9]/.test(event.key)) {
-              event.preventDefault();
-            }
-          }}
-        />
-        {isOtpCode && (
+        <div className={styles.relativeBlock}>
           <input
             onChange={(e) => {
-              optCodeHandler(e);
+              phoneHandler(e);
             }}
-            placeholder="Проверочный код"
-            type="text"
-            value={otpCode}
+            placeholder="Телефон"
+            value={phone}
+            onKeyPress={(event) => {
+              if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
+              }
+            }}
+            autoFocus
           />
+          <div id={styles.phone}>
+            <span className={styles.validation}>
+              Поле является обязательным
+            </span>
+          </div>
+        </div>
+
+        {isOtpCode && (
+          <div className={styles.relativeBlock}>
+            <input
+              onChange={(e) => {
+                optCodeHandler(e);
+              }}
+              placeholder="Проверочный код"
+              type="text"
+              value={otpCode}
+            />
+            <div id={styles.code}>
+              <span className={styles.validation}>
+                Код должен содержать 6 цифр
+              </span>
+            </div>
+          </div>
         )}
         <button
           onClick={() => {
             isOtpCode
-              ? otpCode.length < 6
-                ? alert("Код должен содержать 6 цифр")
+              ? otpCode.length != 6
+                ? document
+                    .getElementById(`${styles.code}`)!
+                    .style.setProperty("display", "block")
                 : authorization()
               : phone == ""
-              ? alert("Заполните номер телефона!")
+              ? document
+                  .getElementById(`${styles.phone}`)!
+                  .style.setProperty("display", "block")
               : getOtpCode(phone).then((responce) => {
                   responceHandler(responce.success);
                 });

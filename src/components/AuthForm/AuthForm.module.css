@@ -98,3 +98,27 @@ button {
   color: #344051;
   cursor: pointer;
 }
+
+.relativeBlock {
+  position: relative;
+}
+
+.validation {
+  position: absolute;
+  height: 20px;
+  width: 320px;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  color: red;
+  top: -22px;
+}
+
+#phone {
+  display: none;
+}
+
+#code {
+  display: none;
+}

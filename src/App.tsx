@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useNavigate,
-  replace,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthorizationPage from "./Pages/AuthorizationPage/AuthorizationPage";
 import MainPage from "./Pages/MainPage/MainPage";
 
