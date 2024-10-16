@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AuthorizationPage from "./Pages/AuthorizationPage/AuthorizationPage";
-import MainPage from "./Pages/MainPage/MainPage";
+import AuthorizationPage from "./pages/AuthorizationPage/AuthorizationPage";
+import MainPage from "./pages/MainPage/MainPage";
 
 function App() {
   const [isLogged, setIsLogged] = useState(
